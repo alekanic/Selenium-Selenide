@@ -1,19 +1,14 @@
 import com.codeborne.selenide.Condition;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.http.ClientConfig;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class test {
+public class AppTest {
 
     private WebDriver driver;
 
@@ -43,26 +38,39 @@ public class test {
         open("http://localhost:9999/");
         $("button").click();
 
-        $("[data-test-id=name]").shouldHave(cssClass("input_invalid"))
+        $("[data-test-id=name].input_invalid .input__sub").shouldBe(visible)
+        ;
+    }
+
+    @Test
+    void testWithoutName() {
+
+        open("http://localhost:9999/");
+        $("[data-test-id=phone] input").setValue("+79219008080");
+        $("[data-test-id=agreement]").click();
+        $("button").click();
+
+        $("[data-test-id='name'].input_invalid .input__sub").shouldBe(visible)
         ;
     }
 
     @Test
 
-    // заполнено только поле Фамилия и имя + клик на Продолжить
-    void testWithTheNameOnly() {
+    // не заполнен телефон
+    void testWithoutThePhone() {
 
         open("http://localhost:9999/");
         $("[data-test-id=name] input").setValue("Василиса Ильинична");
+        $("[data-test-id=agreement]").click();
         $("button").click();
 
-        $("[data-test-id=phone]").shouldHave(cssClass("input_invalid"))
+        $("[data-test-id='phone'].input_invalid .input__sub").shouldBe(visible)
         ;
     }
 
     @Test
 
-    // не поставлена галочка в чек-боксе
+    // пустой чек-бокс
     void testWithoutCheckbox() {
 
         open("http://localhost:9999/");
@@ -70,11 +78,12 @@ public class test {
         $("[data-test-id=phone] input").setValue("+79219008080");
         $("button").click();
 
-        $("[data-test-id=agreement]").shouldHave(cssClass("input_invalid"));
+        $("[data-test-id='agreement'].input_invalid").shouldBe(visible)
         ;
     }
 
     @Test
+    // невалидное имя
     void testWithNameInEnglish() {
 
         open("http://localhost:9999/");
@@ -83,7 +92,7 @@ public class test {
         $("[data-test-id=agreement]").click();
         $("button").click();
 
-        $("[data-test-id=name]").shouldHave(cssClass("input_invalid"))
+        $("[data-test-id='name'].input_invalid .input__sub").shouldBe(visible)
         ;
     }
 
@@ -96,7 +105,7 @@ public class test {
         $("[data-test-id=agreement]").click();
         $("button").click();
 
-        $("[data-test-id=phone]").shouldHave(cssClass("input_invalid"))
+        $("[data-test-id='phone'].input_invalid").shouldBe(visible)
         ;
     }
 
