@@ -38,8 +38,9 @@ public class AppTest {
         open("http://localhost:9999/");
         $("button").click();
 
-        $("[data-test-id=name].input_invalid .input__sub").shouldBe(visible)
+        $("[data-test-id=name].input_invalid .input__sub").shouldHave(text("Поле обязательно для заполнения"))
         ;
+
     }
 
     @Test
@@ -50,7 +51,7 @@ public class AppTest {
         $("[data-test-id=agreement]").click();
         $("button").click();
 
-        $("[data-test-id='name'].input_invalid .input__sub").shouldBe(visible)
+        $("[data-test-id='name'].input_invalid .input__sub").shouldHave(text("Поле обязательно для заполнения"))
         ;
     }
 
@@ -64,7 +65,7 @@ public class AppTest {
         $("[data-test-id=agreement]").click();
         $("button").click();
 
-        $("[data-test-id='phone'].input_invalid .input__sub").shouldBe(visible)
+        $("[data-test-id='phone'].input_invalid .input__sub").shouldHave(text("Поле обязательно для заполнения"))
         ;
     }
 
@@ -92,7 +93,7 @@ public class AppTest {
         $("[data-test-id=agreement]").click();
         $("button").click();
 
-        $("[data-test-id='name'].input_invalid .input__sub").shouldBe(visible)
+        $("[data-test-id='name'].input_invalid .input__sub").shouldHave(text("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."))
         ;
     }
 
@@ -105,7 +106,7 @@ public class AppTest {
         $("[data-test-id=agreement]").click();
         $("button").click();
 
-        $("[data-test-id='phone'].input_invalid").shouldBe(visible)
+        $("[data-test-id='phone'].input_invalid").shouldHave(text("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."))
         ;
     }
 
